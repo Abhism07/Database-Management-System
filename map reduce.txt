@@ -1,0 +1,44 @@
+// mapreduce
+db.createCollection('mapr')
+db.mapr.insert({id:100,name:'op',salary:12000})
+db.mapr.insert({id:107,name:'ee',salary:2000})
+db.mapr.insert({id:154,name:'op',salary:125000})
+db.mapr.insert({id:200,name:'ut',salary:55000})
+db.mapr.insert({id:356,name:'op',salary:80000})
+
+sum
+db.mapr.mapReduce(function() {emit (this.name,this.salary);},
+function(key,values) {return Array.sum(values)},
+{query:{name:'op'}, out:'resullts1'})
+db.resullts1.find()
+
+// o/p
+// { "result" : "resullts1", "ok" : 1 }
+// { "_id" : "op", "value" : 217000 }
+
+avg
+db.mapr.mapReduce(function() {emit (this.name,this.salary);},
+function(key,values) {return Array.avg(values)},
+{query:{name:'op'}, out:'resullts2'})
+db.resullts2.find()
+
+// o/p-
+// { "result" : "resullts2", "ok" : 1 }
+// { "_id" : "op", "value" : 72333.33333333333 }
+
+// count
+db.mapr.mapReduce(function() {emit (1,1);},
+function(key,values) {return Array.sum(values)},
+{query:{name:'op'}, out:'result3'})
+db.result3.find()
+// o/p- { "result" : "result3", "ok" : 1 }
+//{ "_id" : 1, "value" : 3 }
+ 
+db.mapr.mapReduce(function() {emit (1,1);},
+function(key,values) {return Array.sum(values)},
+{query:{salary:{"$gt":12000}}, out:'result4'})
+db.result4.find()
+
+// o/p-
+// { "result" : "result4", "ok" : 1 }
+//{ "_id" : 1, "value" : 3 }
