@@ -1,0 +1,25 @@
+// crud operations on collecction
+db.createCollection('newdata')
+db.newdata.insert({sub:"DBMS",name:'abhishek',id:100})
+db.newdata.insert({sub:"spos",name:'AM',id:120})
+db.newdata.insert({sub:"cns",name:'PM',id:200})
+
+db.newdata.update({sub:'spos'},{$set:{sub:"harderone",name:"SM",id:155}})
+db.newdata.remove({id:200})
+db.newdata.deleteOne({sub:"DBMS"})
+db.newdata.find().pretty()
+
+aggregate function on collection
+db.createCollection('dbs')
+db.dbs.insert({id:102,name:'abhi',marks:149,city:'pune'})
+db.dbs.insert({id:107,name:'avinash',marks:119,city:'mumbai'})
+db.dbs.insert({id:109,name:'pratik',marks:130,city:'pune'})
+db.dbs.insert({id:114,name:'vaibhav',marks:125,city:'kolhapur'})
+db.dbs.insert({id:154,name:'pranay',marks:144,city:'pune'})
+db.dbs.insert({id:172,name:'aryan',marks:147,city:'satara'})
+db.dbs.find().pretty()
+
+db.dbs.aggregate([{$group:{_id:'$city',num:{$sum:'$marks'}}}])
+db.dbs.aggregate([{$group:{_id:'$city',avg:{$avg:'$marks'}}}])
+db.dbs.aggregate([{$group:{_id:'$city',max:{$max:'$marks'}}}])
+db.dbs.aggregate([{$group:{_id:'$city',min:{$min:'$marks'}}}])

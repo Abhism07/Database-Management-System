@@ -1,0 +1,46 @@
+ create table students(no number(5),name varchar2(20),marks number(5));
+create table result3(no number(5),name varchar2(20),class varchar2(30));
+
+create procedure final11(no number,name varchar2,marks number)
+as
+class varchar2(20);
+begin
+if(marks<=1500 and marks>=999) then
+class:='distinction';
+elsif(marks<=998 and marks>=899) then
+class:='first class';
+elsif(marks<=898 and marks>=825) then
+class:='second class';
+elsif(marks<=825 and marks>=700) then
+class:='pass';
+else 
+class:='fail';
+end if;
+
+insert into students values (no,name,marks);
+insert into result3 values (no,name,class);
+end;
+/
+
+exec final11(10,'abhi',1400);
+exec final11(15,'ashu',888);
+
+select * from students;
+select * from result3;
+
+-- output
+Statement processed.
+
+Result Set 7
+NO	NAME	MARKS
+10	abhi	1400
+15	ashu	888
+Download CSV
+2 rows selected.
+
+Result Set 8
+NO	NAME	CLASS
+10	abhi	distinction
+15	ashu	second class
+Download CSV
+2 rows selected.

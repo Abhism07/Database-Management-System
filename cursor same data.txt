@@ -1,0 +1,71 @@
+create table o_roll(roll number(5),name varchar2(30));
+create table n_roll(roll number(5),name varchar2(30));
+insert into o_roll values (10,'naveen');
+insert into o_roll values(11,'sab');
+insert into o_roll values(17,'usa');
+insert into n_roll values(22,'ash');
+insert into n_roll values(10,'een');
+insert into n_roll values (17,'nav');
+create table new1 (roll number(5),name varchar2(30));
+declare
+cursor c1 is select * from o_roll where roll not in (select roll from n_roll where o_roll.roll=n_roll.roll);
+temp n_roll%rowtype;
+begin
+open c1;
+loop 
+fetch c1 into temp;
+exit when c1%notfound;
+insert into n_roll values (temp.roll,temp.name);
+end loop;
+
+close c1;
+end;
+/
+
+select * from n_roll;
+
+
+
+--output
+
+Statement processed.
+ROLL	NAME
+11	sab
+22	ash
+10	een
+17	nav
+
+
+-- prametrized cursor
+
+create table o_roll(roll number(5),name varchar2(30));
+create table n_roll(roll number(5),name varchar2(30));
+insert into o_roll values (10,'naveen');
+insert into o_roll values(11,'sab');
+insert into o_roll values(17,'usa');
+insert into n_roll values(22,'ash');
+insert into n_roll values(10,'een');
+insert into n_roll values (17,'nav');
+create table new1 (roll number(5),name varchar2(30));
+declare
+cursor c1(roll number,name varchar2) is select * from o_roll where roll not in (select roll from n_roll where o_roll.roll=n_roll.roll);
+temp n_roll%rowtype;
+begin
+open c1(11,'bumrah');
+loop 
+fetch c1 into temp;
+exit when c1%notfound;
+insert into n_roll values (temp.roll,temp.name);
+end loop;
+
+close c1;
+end;
+/
+
+select * from n_roll;
+
+-- output
+
+22	ash
+10	een
+17	nav

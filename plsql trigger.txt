@@ -1,0 +1,31 @@
+create table lib(bid number(5),bname varchar2(30),author varchar2(30));
+insert into lib values(100,'m3','abhi');
+insert into lib values(150,'marathi','avi');
+insert into lib values(104,'marathi','tarun');
+insert into lib values(190,'cns','arun');
+create table lib_audit(bid number(5),bname varchar2(30),author varchar2(30));
+create trigger trig 
+before update or delete on lib
+for each row
+begin
+insert into lib_audit values(:old.bid,:old.bname,:old.author);
+end;
+/
+
+update lib set bname='idk' where bid=104;
+delete from lib where author='avi';
+
+select * from lib;
+select * from lib_audit;
+
+-- output
+lib - 
+BID	BNAME	AUTHOR
+100	m3	abhi
+104	idk	tarun
+190	cns	arun
+
+lub_audit -
+BID	BNAME	AUTHOR
+104	marathi	tarun
+150	marathi	avi
