@@ -1,0 +1,28 @@
+--PL/SQL block for area of a circle for a value of radius 
+-- varying from 5 to 9
+create table Areas(Radius number(5) unique, Area number(14,2) 
+unique)
+DECLARE 
+PI CONSTANT number(4,2) := 3.14; 
+Radius number(5) :=5; 
+Area number(14,2); 
+ 
+BEGIN 
+Radius:= 5; 
+while Radius <=9 
+LOOP 
+Area:= PI*(Radius*Radius); 
+--Area:= PI* power(Radius,2); 
+insert into Areas values(Radius, Area); 
+Radius:=Radius +1; 
+END LOOP; 
+END;
+/
+select * from Areas;
+--------------------------OUTPUT---------------------------------
+RADIUS AREA
+5 78.5
+6 113.04
+7 153.86
+8 200.96
+9 254.3
