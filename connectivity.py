@@ -23,6 +23,7 @@ def update():
     query= "update info set {}='{}' where id={}".format(column,value,id)
     cursor.execute(query)
     con.commit()
+print("1.INSERT\n2.DELETE\n3.UPDATE\n")    
 while(True):
     ch = int(input("enter your choice:"))
     if (ch==1):
@@ -31,4 +32,6 @@ while(True):
         delete()
     elif(ch==3):
         update()
+    elif(ch!=3):
+        break
 
