@@ -1,0 +1,24 @@
+// use empdb
+db.createCollection('employee')
+db.employee.insert({_id:1,empid:100,name:{fname:'abhishek',lname:'M'},company:'TCS',salary:150000,desgn:'DBA',age:20,expertise:[{'expert':'coding'}],dob:'3nov2002',emaiid:'somthing@gmail.com',contact:'54984',address:{paddr:[{'place':'anand park'}],laddr:[{'city':'pune'}]}})
+db.employee.insert({_id:2,empid:106,name:{fname:'abhi',lname:'M'},company:'microsoft',salary:1500,desgn:'manager',age:15,expertise:[{'expert':'design'}],dob:'3nov2007',emaiid:'somthing@gmail.com',contact:'5455',address:{paddr:[{'place':'kpark'}],laddr:[{'city':'pune'}]}})
+db.employee.insert({_id:3,empid:108,name:{fname:'shek',lname:'M'},company:'microsoft',salary:10000,desgn:'DBA',age:21,expertise:[{'expert':'devloping'}],dob:'30nov2005',emaiid:'somthing@gmail.com',contact:'5897',address:{paddr:[{'place':'m park'}],laddr:[{'city':'mum'}]}})
+db.employee.insert({_id:4,empid:107,name:{fname:'his',lname:'M'},company:'TCS',salary:50000,desgn:'intern',age:25,expertise:[{'expert':'bug'}],dob:'3dec1990',emaiid:'somthing@gmail.com',contact:'577',address:{paddr:'apark',laddr:'pune'}})
+
+db.employee.aggregate([{$match :{desgn:"DBA"}},{$group:{_id:"DBA" ,sum:{$sum:"$salary"}}}])
+// db.employee.aggregate([{$match :{desgn:"DBA"}},{$sort:{empid:1}}])
+
+//db.employee.aggregate([{$group:{_id:"$desgn" ,sum:{$sum:"$salary"}}},{$sort:{sum:-1}}])
+//db.employee.aggregate([{$group:{_id:"$desgn" ,avg:{$avg:"$salary"}}},{$sort:{avg:1}}])
+
+// db.employee.find({name:{fname:'abhishek',lname:'M'}},{expertise:1});
+
+//  db.employee.createIndex({"name":1,age:-1})
+//  db.employee.getIndexes()
+
+// db.employee.mapReduce(function() {emit (this.company,1);}, function(company,value) {return Array.sum(salary)},{out:"result1"})
+// db.result1.find()
+
+// db.employee.mapReduce(function() {emit (this.company,this.salary);}, function(company,salary) {return Array.sum(salary)},{query:{company:"microsoft"} ,out:"result1"})
+// db.result1.find()
+
